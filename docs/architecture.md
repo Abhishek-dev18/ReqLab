@@ -2,7 +2,7 @@
 
 ## Overview
 
-API Studio OSS follows a classic three-tier architecture with clear separation between frontend, backend API, and data layers. A pluggable execution layer prepares for future Local Agent integration.
+ReqLab follows a classic three-tier architecture with clear separation between frontend, backend API, and data layers. A pluggable execution layer prepares for future Local Agent integration.
 
 ```mermaid
 flowchart TB
@@ -113,7 +113,7 @@ The agent will implement the same interface: `execute()`, `validate()`, `cancel(
 
 | Feature | Extension Point |
 |---------|----------------|
-| Load testing | New executor + scheduler service |
+| Load testing | **Not implemented** — planned as new executor + scheduler service |
 | GraphQL | New request type + dedicated executor |
 | gRPC | Proto parser + grpc executor |
 | SOAP | WSDL parser + XML executor |

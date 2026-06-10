@@ -39,17 +39,22 @@ export default function KeyValueEditor({
   }
 
   return (
-    <div className="space-y-2">
+    <div className="overflow-hidden rounded border border-pm-border">
+      <div className="kv-table-header">
+        <span>Key</span>
+        <span>Value</span>
+        <span />
+      </div>
       {rows.map(([key, value], index) => (
-        <div key={index} className="flex gap-2">
+        <div key={index} className="kv-table-row hover:bg-pm-hover/30">
           <input
-            className="input-field flex-1 font-mono text-xs"
+            className="rounded border border-transparent bg-transparent px-2 py-1.5 font-mono text-xs text-pm-text outline-none focus:border-pm-border focus:bg-pm-panel"
             placeholder={keyPlaceholder}
             value={key}
             onChange={(e) => updateRow(index, e.target.value, value)}
           />
           <input
-            className="input-field flex-1 font-mono text-xs"
+            className="rounded border border-transparent bg-transparent px-2 py-1.5 font-mono text-xs text-pm-text outline-none focus:border-pm-border focus:bg-pm-panel"
             placeholder={valuePlaceholder}
             value={value}
             onChange={(e) => updateRow(index, key, e.target.value)}
@@ -57,16 +62,16 @@ export default function KeyValueEditor({
           <button
             type="button"
             onClick={() => removeRow(index)}
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-800 hover:text-red-400"
+            className="flex items-center justify-center rounded text-pm-muted hover:bg-pm-hover hover:text-red-400"
           >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-3.5 w-3.5" />
           </button>
         </div>
       ))}
       <button
         type="button"
         onClick={addRow}
-        className="flex items-center gap-1 text-xs text-brand-400 hover:text-brand-300"
+        className="flex w-full items-center gap-1.5 px-3 py-2 text-xs text-pm-orange hover:bg-pm-hover/30"
       >
         <Plus className="h-3 w-3" />
         Add row

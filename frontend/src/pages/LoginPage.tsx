@@ -1,6 +1,5 @@
 import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Zap } from 'lucide-react'
 import { authApi } from '../api'
 import { useAuthStore } from '../stores/authStore'
 
@@ -21,7 +20,7 @@ export default function LoginPage() {
       setTokens(tokens.access_token, tokens.refresh_token)
       const { data: user } = await authApi.me()
       setUser(user)
-      navigate('/')
+      navigate('/collections')
     } catch {
       setError('Invalid email or password')
     } finally {
@@ -30,21 +29,28 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-pm-bg p-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-600">
-            <Zap className="h-8 w-8 text-white" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-pm-orange text-2xl font-bold text-white">
+            R
           </div>
-          <h1 className="text-2xl font-bold text-white">API Studio OSS</h1>
-          <p className="mt-1 text-slate-400">Modern API development platform</p>
+          <h1 className="text-2xl font-bold text-pm-text">ReqLab</h1>
+          <p className="mt-1 text-sm text-pm-muted">API development &amp; testing platform</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="card space-y-4">
-          <h2 className="text-lg font-semibold">Sign in</h2>
-          {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-400">{error}</p>}
-          <div>
-            <label className="mb-1 block text-sm text-slate-400">Email</label>
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-lg border border-pm-border bg-pm-sidebar p-6 shadow-xl"
+        >
+          <h2 className="mb-4 text-lg font-semibold text-pm-text">Sign in to ReqLab</h2>
+          {error && (
+            <p className="mb-4 rounded border border-method-delete/30 bg-method-delete/10 px-3 py-2 text-sm text-method-delete">
+              {error}
+            </p>
+          )}
+          <div className="mb-4">
+            <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">Email</label>
             <input
               type="email"
               className="input-field"
@@ -53,8 +59,10 @@ export default function LoginPage() {
               required
             />
           </div>
-          <div>
-            <label className="mb-1 block text-sm text-slate-400">Password</label>
+          <div className="mb-6">
+            <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">
+              Password
+            </label>
             <input
               type="password"
               className="input-field"
@@ -63,13 +71,13 @@ export default function LoginPage() {
               required
             />
           </div>
-          <button type="submit" disabled={loading} className="btn-primary w-full">
-            {loading ? 'Signing in...' : 'Sign in'}
+          <button type="submit" disabled={loading} className="btn-send w-full">
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
-          <p className="text-center text-sm text-slate-500">
+          <p className="mt-4 text-center text-sm text-pm-muted">
             No account?{' '}
-            <Link to="/register" className="text-brand-400 hover:text-brand-300">
-              Register
+            <Link to="/register" className="text-pm-orange hover:text-pm-orange-hover">
+              Create one
             </Link>
           </p>
         </form>

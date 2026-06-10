@@ -43,15 +43,17 @@ export default function ImportPage() {
   }
 
   return (
-    <div className="p-8">
-      <h1 className="mb-2 text-2xl font-bold text-white">OpenAPI Import</h1>
-      <p className="mb-6 text-slate-400">
+    <div className="h-full overflow-auto p-6">
+      <h1 className="mb-1 text-xl font-semibold text-pm-text">Import OpenAPI</h1>
+      <p className="mb-6 text-sm text-pm-muted">
         Import OpenAPI 3.x JSON or YAML to automatically create collections, folders, and requests.
       </p>
 
-      <div className="card max-w-3xl space-y-4">
+      <div className="max-w-3xl space-y-4 rounded-lg border border-pm-border bg-pm-sidebar p-6">
         <div>
-          <label className="mb-1 block text-sm text-slate-400">Collection name (optional)</label>
+          <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">
+            Collection name (optional)
+          </label>
           <input
             className="input-field"
             placeholder="Override name from spec"
@@ -61,34 +63,42 @@ export default function ImportPage() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm text-slate-400">Upload file</label>
-          <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-dashed border-slate-700 px-4 py-6 text-slate-400 hover:border-brand-500 hover:text-brand-400">
-            <Upload className="h-5 w-5" />
-            <span>Click to upload JSON or YAML</span>
+          <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">
+            Upload file
+          </label>
+          <label className="flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed border-pm-border px-4 py-8 text-pm-muted transition hover:border-pm-orange hover:text-pm-orange">
+            <Upload className="h-6 w-6" />
+            <span className="text-sm">Click to upload JSON or YAML</span>
             <input type="file" accept=".json,.yaml,.yml" className="hidden" onChange={handleFileUpload} />
           </label>
         </div>
 
         <div>
-          <label className="mb-1 block text-sm text-slate-400">Or paste specification</label>
+          <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">
+            Or paste specification
+          </label>
           <textarea
-            className="input-field min-h-64 font-mono text-xs"
+            className="input-field min-h-64 font-mono text-xs leading-relaxed"
             placeholder="openapi: 3.0.0..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
 
-        {error && <p className="text-sm text-red-400">{error}</p>}
-        {result && <p className="text-sm text-emerald-400">{result}</p>}
+        {error && (
+          <p className="rounded border border-method-delete/30 bg-method-delete/10 px-3 py-2 text-sm text-method-delete">
+            {error}
+          </p>
+        )}
+        {result && (
+          <p className="rounded border border-method-post/30 bg-method-post/10 px-3 py-2 text-sm text-method-post">
+            {result}
+          </p>
+        )}
 
-        <button onClick={handleImport} disabled={loading} className="btn-primary">
+        <button onClick={handleImport} disabled={loading} className="btn-send">
           {loading ? 'Importing...' : 'Import OpenAPI Spec'}
         </button>
-      </div>
-
-      <div className="mt-8 rounded-xl border border-dashed border-slate-700 bg-slate-900/30 p-8 text-center text-slate-500">
-        [Screenshot: OpenAPI import result]
       </div>
     </div>
   )

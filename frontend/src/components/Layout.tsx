@@ -6,19 +6,18 @@ import {
   Globe,
   LayoutDashboard,
   LogOut,
-  Send,
-  Zap,
+  User,
 } from 'lucide-react'
 import { useAuthStore } from '../stores/authStore'
 import { authApi } from '../api'
+import EnvironmentSelector from './EnvironmentSelector'
 
 const navItems = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/collections', icon: FolderTree, label: 'Collections' },
-  { to: '/builder', icon: Send, label: 'Request Builder' },
-  { to: '/environments', icon: Globe, label: 'Environments' },
-  { to: '/history', icon: Clock, label: 'History' },
-  { to: '/import', icon: BookOpen, label: 'OpenAPI Import' },
+  { to: '/collections', icon: FolderTree, label: 'Collections', title: 'Collections' },
+  { to: '/history', icon: Clock, label: 'History', title: 'History' },
+  { to: '/environments', icon: Globe, label: 'Environments', title: 'Environments' },
+  { to: '/import', icon: BookOpen, label: 'Import', title: 'OpenAPI Import' },
+  { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', title: 'Dashboard' },
 ]
 
 export default function Layout() {
@@ -36,56 +35,63 @@ export default function Layout() {
   }
 
   return (
-    <div className="flex min-h-screen">
-      <aside className="flex w-64 flex-col border-r border-slate-800 bg-slate-900/80">
-        <div className="flex items-center gap-2 border-b border-slate-800 px-5 py-4">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600">
-            <Zap className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <Link to="/" className="text-sm font-semibold text-white">
-              API Studio
-            </Link>
-            <p className="text-xs text-slate-500">Open Source</p>
-          </div>
+    <div className="flex h-screen flex-col overflow-hidden bg-pm-bg">
+      {/* Top header — Postman-style */}
+      <header className="flex h-12 shrink-0 items-center justify-between border-b border-pm-border bg-pm-header px-4">
+        <div className="flex items-center gap-4">
+          <Link to="/collections" className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-pm-orange font-bold text-white">
+              R
+            </div>
+            <span className="text-base font-semibold text-pm-text">ReqLab</span>
+          </Link>
+          <div className="hidden h-5 w-px bg-pm-border sm:block" />
+          <span className="hidden text-sm text-pm-muted sm:block">My Workspace</span>
         </div>
 
-        <nav className="flex-1 space-y-1 p-3">
-          {navItems.map(({ to, icon: Icon, label }) => (
+        <div className="flex items-center gap-3">
+          <EnvironmentSelector />
+          <div className="hidden items-center gap-2 sm:flex">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-pm-surface text-pm-muted">
+              <User className="h-4 w-4" />
+            </div>
+            <div className="text-right">
+              <p className="text-sm font-medium leading-tight text-pm-text">{user?.username}</p>
+              <p className="max-w-[140px] truncate text-xs text-pm-muted">{user?.email}</p>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            title="Logout"
+            className="pm-icon-nav text-pm-muted hover:text-red-400"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
+        </div>
+      </header>
+
+      <div className="flex min-h-0 flex-1">
+        {/* Icon rail */}
+        <aside className="flex w-12 shrink-0 flex-col items-center gap-1 border-r border-pm-border bg-pm-sidebar py-3">
+          {navItems.map(({ to, icon: Icon, title }) => (
             <NavLink
               key={to}
               to={to}
-              end={to === '/'}
+              title={title}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition ${
-                  isActive
-                    ? 'bg-brand-600/20 text-brand-300'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
-                }`
+                `pm-icon-nav ${isActive ? 'pm-icon-nav-active' : ''}`
               }
             >
-              <Icon className="h-4 w-4" />
-              {label}
+              <Icon className="h-5 w-5" />
             </NavLink>
           ))}
-        </nav>
+        </aside>
 
-        <div className="border-t border-slate-800 p-4">
-          <p className="truncate text-sm font-medium text-slate-200">{user?.username}</p>
-          <p className="truncate text-xs text-slate-500">{user?.email}</p>
-          <button
-            onClick={handleLogout}
-            className="mt-3 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:bg-slate-800 hover:text-red-400"
-          >
-            <LogOut className="h-4 w-4" />
-            Logout
-          </button>
-        </div>
-      </aside>
-
-      <main className="flex-1 overflow-auto">
-        <Outlet />
-      </main>
+        {/* Main workspace */}
+        <main className="min-w-0 flex-1 overflow-hidden">
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }

@@ -1,1 +1,1 @@
-"""API Studio OSS Backend."""
+"""ReqLab Backend."""

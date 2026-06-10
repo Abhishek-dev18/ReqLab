@@ -23,6 +23,6 @@ export const useAuthStore = create<AuthState>()(
       logout: () => set({ user: null, accessToken: null, refreshToken: null }),
       isAuthenticated: () => !!get().accessToken,
     }),
-    { name: 'api-studio-auth' },
+    { name: 'reqlab-auth' },
   ),
 )

@@ -1,6 +1,5 @@
 import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Zap } from 'lucide-react'
 import { authApi } from '../api'
 
 export default function RegisterPage() {
@@ -24,19 +23,26 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-pm-bg p-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-600">
-            <Zap className="h-8 w-8 text-white" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-pm-orange text-2xl font-bold text-white">
+            R
           </div>
-          <h1 className="text-2xl font-bold text-white">Create account</h1>
+          <h1 className="text-2xl font-bold text-pm-text">Create your ReqLab account</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="card space-y-4">
-          {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-400">{error}</p>}
-          <div>
-            <label className="mb-1 block text-sm text-slate-400">Email</label>
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-lg border border-pm-border bg-pm-sidebar p-6 shadow-xl"
+        >
+          {error && (
+            <p className="mb-4 rounded border border-method-delete/30 bg-method-delete/10 px-3 py-2 text-sm text-method-delete">
+              {error}
+            </p>
+          )}
+          <div className="mb-4">
+            <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">Email</label>
             <input
               type="email"
               className="input-field"
@@ -45,8 +51,10 @@ export default function RegisterPage() {
               required
             />
           </div>
-          <div>
-            <label className="mb-1 block text-sm text-slate-400">Username</label>
+          <div className="mb-4">
+            <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">
+              Username
+            </label>
             <input
               className="input-field"
               value={form.username}
@@ -55,8 +63,10 @@ export default function RegisterPage() {
               minLength={3}
             />
           </div>
-          <div>
-            <label className="mb-1 block text-sm text-slate-400">Password</label>
+          <div className="mb-6">
+            <label className="mb-1.5 block text-xs font-medium uppercase text-pm-muted">
+              Password
+            </label>
             <input
               type="password"
               className="input-field"
@@ -66,12 +76,12 @@ export default function RegisterPage() {
               minLength={8}
             />
           </div>
-          <button type="submit" disabled={loading} className="btn-primary w-full">
-            {loading ? 'Creating...' : 'Create account'}
+          <button type="submit" disabled={loading} className="btn-send w-full">
+            {loading ? 'Creating...' : 'Create Account'}
           </button>
-          <p className="text-center text-sm text-slate-500">
+          <p className="mt-4 text-center text-sm text-pm-muted">
             Already have an account?{' '}
-            <Link to="/login" className="text-brand-400 hover:text-brand-300">
+            <Link to="/login" className="text-pm-orange hover:text-pm-orange-hover">
               Sign in
             </Link>
           </p>

@@ -38,14 +38,15 @@ export default function App() {
           </ProtectedRoute>
         }
       >
-        <Route path="/" element={<DashboardPage />} />
+        <Route path="/" element={<Navigate to="/collections" replace />} />
         <Route path="/collections" element={<CollectionsPage />} />
         <Route path="/builder" element={<BuilderPage />} />
         <Route path="/environments" element={<EnvironmentsPage />} />
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/import" element={<ImportPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/collections" replace />} />
     </Routes>
   )
 }
