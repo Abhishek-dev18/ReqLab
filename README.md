@@ -127,4 +127,4 @@ class RequestExecutor(ABC):
 
 ## License
 
-Open Source — MIT (or your chosen license)
+Open Source — MIT
